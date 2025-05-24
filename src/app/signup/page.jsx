@@ -21,7 +21,7 @@ const SignUp = () => {
     event.preventDefault();
     console.log(name,email,password);
     try { //https://gate-server-new.salmonsmoke-2ff84997.centralindia.azurecontainerapps.io
-      const response = await axios.post('http://localhost:3000/api/signup', {
+      const response = await axios.post('/api/signup', {
         name,
         email,
         password,

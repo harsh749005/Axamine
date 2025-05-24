@@ -170,7 +170,7 @@ const  SignIn = ()=> {
       return;
     }
     
-    let response = await axios.post("http://localhost:3000/api/login")
+    let response = await axios.post("/api/login")
     console.log(response);
 
     console.log('Login attempted with:', formData);

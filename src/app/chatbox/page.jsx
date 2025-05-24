@@ -13,7 +13,7 @@ import { GoSidebarExpand } from "react-icons/go";
 import ChatOptionButton from "../components/chatOptionButton/ChatOptionButton";
 import Image from "next/image";
 
-// ${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/test-db/api/test-db
+// /api/test-db/api/test-db
 const demoUserName = [
   {
     id: 1,
@@ -88,7 +88,7 @@ const ChatBox = () => {
       const fetchChatMessages = async () => {
         try { 
           const chatMessages = await axios.get(
-            `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/chat-fetch?username=${username}`
+            `/api/chat-fetch?username=${username}`
           );
           // setUserChats()
           let history = chatMessages.data.chats;
@@ -132,7 +132,7 @@ console.log("username", username);
           timestamp: Date.now() 
       }
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/test-db`,
+        `/api/test-db`,
         { 
           message: userMessage.message,
           sender: userMessage.sender,
@@ -160,7 +160,7 @@ console.log("username", username);
           timestamp: Date.now(),
         };
         setMessages((prev) => [...prev, botReply]);
-        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/test-db`, {
+        await axios.post(`/api/test-db`, {
             message: botReply.text,
             sender: botReply.sender,
             username: botReply.username,

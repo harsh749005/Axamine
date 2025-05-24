@@ -13,7 +13,7 @@ import { GoSidebarExpand } from "react-icons/go";
 import ChatOptionButton from "../components/chatOptionButton/ChatOptionButton";
 import Image from "next/image";
 
-// http://localhost:3000/api/test-db
+// ${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/test-db/api/test-db
 const demoUserName = [
   {
     id: 1,
@@ -83,20 +83,21 @@ const ChatBox = () => {
   //fetch old chats 
     useEffect(() => {
       
-      if (!username) return; // wait until we have it , this should be uncomment when we store username in cookies bez in cookies no username is stored
+      if (!username) return;// wait until we have it , this should be uncomment when we store username in cookies bez in cookies no username is stored
       
       const fetchChatMessages = async () => {
-        try {
+        try { 
           const chatMessages = await axios.get(
-            `${import.meta.env.VITE_NEXT_APP_BACKEND_BASEURL}/api/chat-fetch?username=${username}`
+            `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/chat-fetch?username=${username}`
           );
           // setUserChats()
           let history = chatMessages.data.chats;
+          console.log("history che",chatMessages);
           const formatted = history.map((msg) => ({
             sender: msg.sender,
             text: msg.messages,
           }));
-          console.log(username);
+          console.log("ye toh",username);
           console.log("Fetched from API:", formatted);
           setMessages(formatted);
         } catch (error) {
@@ -131,7 +132,7 @@ console.log("username", username);
           timestamp: Date.now() 
       }
       const response = await axios.post(
-        `${import.meta.env.VITE_NEXT_APP_BACKEND_BASEURL}/api/test-db`,
+        `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/test-db`,
         { 
           message: userMessage.message,
           sender: userMessage.sender,
@@ -154,12 +155,12 @@ console.log("username", username);
         const botText = `You said: "${inputValue}". This is a mock response.`;
         const botReply = {
           sender: "bot",
-          username:"karan", // rn i am setting username manually but need to fetch from user or user browser cookie
+          username, // rn i am setting username manually but need to fetch from user or user browser cookie
           text: botText,
           timestamp: Date.now(),
         };
         setMessages((prev) => [...prev, botReply]);
-        await axios.post(`${import.meta.env.VITE_NEXT_APP_BACKEND_BASEURL}/api/test-db`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/api/test-db`, {
             message: botReply.text,
             sender: botReply.sender,
             username: botReply.username,

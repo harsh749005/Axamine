@@ -14,7 +14,9 @@
     "@reduxjs/toolkit": "^2.3.0",
     "axamin": "file:",
     "axios": "^1.7.7",
+    "bcrypt": "^6.0.0",
     "firebase": "^11.0.2",
+    "jsonwebtoken": "^9.0.2",
     "next": "^14.2.28",
     "pg": "^8.16.0",
     "razorpay": "^2.9.5",
@@ -25,9 +27,13 @@
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/pg": "^8.15.2",
     "@types/react": "18.3.12",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8",
-    "eslint-config-next": "14.2.2"
+    "eslint-config-next": "14.2.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7"
   }
 }

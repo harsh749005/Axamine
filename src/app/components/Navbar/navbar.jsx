@@ -105,6 +105,11 @@ const Navbar = () => {
             Contact us
           </Link>
         </li>
+          <li className={styles.link}>
+          <Link href="/signup" onClick={() => menuClickFunction("#contact")}>
+            Signup
+          </Link>
+        </li>
         <Link href={"/chatbox"} onClick={() => menuClickFunction("/chatbox")}>
           <button
             className={`${styles.btn} ${styles.demoBtn} buttonWithGradient`}

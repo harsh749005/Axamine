@@ -19,16 +19,17 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post('https://gate-server-new.salmonsmoke-2ff84997.centralindia.azurecontainerapps.io/user/signup', {
+    console.log(name,email,password);
+    try { //https://gate-server-new.salmonsmoke-2ff84997.centralindia.azurecontainerapps.io
+      const response = await axios.post('http://localhost:3000/api/signup', {
         name,
         email,
         password,
       });
-
+        console.log(response);
       const { token, credits } = response.data;
       dispatch(loginSuccess({ token, credits }));
-      router.push('/signin');  
+      router.push('/');  
       
       console.log('Signed up successfully:', response.data);
     } catch (err) {

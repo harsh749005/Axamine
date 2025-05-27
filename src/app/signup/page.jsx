@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../redux/slices/authSlice';
+// import { useDispatch } from 'react-redux';
+// import { loginSuccess } from '../redux/slices/authSlice';
 import axios from 'axios';
 import styles from "./page.module.css"
 import Link from 'next/link';
@@ -13,7 +13,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
   
 

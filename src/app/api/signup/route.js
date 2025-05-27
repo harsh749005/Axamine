@@ -10,7 +10,7 @@ export async function POST(req) {
     try {
         const hashedPassword = await bcrypt.hash(password, 10); // 10 salt rounds
 
-        await sql`INSERT INTO app_user (name, email, password) VALUES (${name}, ${email}, ${hashedPassword})`;
+        await sql`INSERT INTO app_user (name, email, password) VALUES (${name}, ${email}, ${password})`;
 
         return NextResponse.json({ status: "success", message: "User registered" });
     } catch (error) {

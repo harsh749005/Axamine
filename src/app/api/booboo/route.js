@@ -10,10 +10,14 @@ export async function POST(req) {
     try {
         const hashedPassword = await bcrypt.hash(password, 10); // 10 salt rounds
 
-        await sql`INSERT INTO app_user (name, email, password) VALUES (${name}, ${email}, ${password})`;
+        await sql`INSERT INTO app_user (name, email, password) VALUES (${name}, ${email}, ${hashedPassword})`;
 
         return NextResponse.json({ status: "success", message: "User registered" });
     } catch (error) {
-        return NextResponse.status(500).json({ status: "fail", message: "Error inserting data", error: error.message });
+        console.log("API Error",error)
+        return NextResponse.json(
+      { error: "Internal Server Error", details: error.message },
+      { status: 500 }
+    );
     }
 }

@@ -8,6 +8,7 @@ import StoreProvider from "./redux/StoreProvider";
 import ClientLayout from "./ClientLayout";  // Import the new client layout component
 import Script from "next/script";
 import { ProfileProvider } from "./hooks/ProfileProvider";
+import {AuthProvider} from "./context/AuthContext"
 
 export const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
@@ -48,11 +49,14 @@ export default function RootLayout({ children }) {
       <body className={`${poppins.className}`}>
         <StoreProvider>
         <ProfileProvider>
+        <AuthProvider>
+
             <Navbar />
             <ClientLayout>
               {children}
             </ClientLayout>
             <ScrollUp />
+        </AuthProvider>
           </ProfileProvider>
         </StoreProvider>
       </body>

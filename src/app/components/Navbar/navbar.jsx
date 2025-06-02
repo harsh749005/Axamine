@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { useCredits } from "../../hooks/useCredits";
 import { FaRegUserCircle } from "react-icons/fa";
-
+import { useAuth } from "../../context/AuthContext";
 const Navbar = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
@@ -21,6 +21,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   console.log(pathname);
+
+  const { isLoggedIn } = useAuth(); 
+  console.log(isLoggedIn);
 
   // Get the logged-in state and credits from Redux
   const { isAuthenticated, credits } = useSelector((state) => state.auth);
@@ -105,11 +108,16 @@ const Navbar = () => {
             Contact us
           </Link>
         </li>
+        {!isLoggedIn && (
+          <>
           <li className={styles.link}>
           <Link href="/signup" onClick={() => menuClickFunction("#contact")}>
             Signup
           </Link>
         </li>
+
+          </>
+        )}
         <Link href={"/chatbox"} onClick={() => menuClickFunction("/chatbox")}>
           <button
             className={`${styles.btn} ${styles.demoBtn} buttonWithGradient`}
@@ -119,7 +127,7 @@ const Navbar = () => {
         </Link>
       </ul>
       <div className={styles.buttons} >
-        {isAuthenticated ? (
+        {isLoggedIn ? (
           <button
             className={`${styles.userProfile} `}
             onClick={() => setPopupVisible(!popupVisible)}

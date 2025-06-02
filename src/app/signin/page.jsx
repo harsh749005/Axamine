@@ -9,7 +9,6 @@
 // import { useRouter, useSearchParams } from 'next/navigation';
 // import { auth, googleProvider, signInWithPopup } from '../firebase/firebaseConfig';
 
-
 // const SignInContent = () => {
 //   const [email, setEmail] = useState('');
 //   const [password, setPassword] = useState('');
@@ -18,42 +17,39 @@
 //   const dispatch = useDispatch();
 //   const router = useRouter();
 //   const redirectPath = searchParams.get("redirect") || "/";  // Fallback to home if no redirect
-//   const signInMessage = redirectPath === "/chatbox" 
-//     ? "Sign In to open the chatbox" 
+//   const signInMessage = redirectPath === "/chatbox"
+//     ? "Sign In to open the chatbox"
 //     : "Sign In";
 
-
- 
 //     const handleGoogleSignIn = async () => {
 //       try {
 //         // Step 1: Sign in with Google and get the Firebase user token
 //         const result = await signInWithPopup(auth, googleProvider);
 //         const user = result.user;
-    
+
 //         // Get the Firebase token
 //         const firebaseToken = await user.getIdToken();
-    
+
 //         // Step 2: Exchange the Firebase token with your backend
 //         const response = await axios.post('https://gate-server-new.salmonsmoke-2ff84997.centralindia.azurecontainerapps.io/user/exchange-token', {
 //           firebase_token: firebaseToken,
 //         });
-    
+
 //         // Step 3: Extract the token and credits from the response
 //         const { access_token, credits } = response.data;
-    
+
 //         // Step 4: Dispatch the Redux action to save the token and credits
 //         dispatch(loginSuccess({ token:access_token, credits }));
-    
+
 //         // Step 5: Redirect the user to the appropriate path
 //         router.push(redirectPath);
-    
+
 //         console.log('Google sign-in and backend exchange successful:', response.data);
 //       } catch (err) {
 //         console.error('Google sign-in error or backend exchange failed:', err);
 //         setError('Google Sign-In failed. Please try again.');
 //       }
 //     };
-    
 
 //   const handleSubmit = async (event) => {
 //     event.preventDefault();
@@ -66,18 +62,17 @@
 //         email,
 //         password,
 //       });
-  
+
 //       const { access_token, credits } = response.data;
 //       dispatch(loginSuccess({ token:access_token, credits }));
 //       router.push(redirectPath);
-  
+
 //       console.log('Logged in successfully:', response.data);
 //     } catch (err) {
 //       setError('Login failed. Please check your credentials.');
 //     }
 //   };
 //   const [agree, setAgree] = useState(false);
-  
 
 //   return (
 //     <div className={styles.container}>
@@ -145,17 +140,16 @@
 
 // export default SignIn;
 
-
 // pages/index.tsx
-"use client"
-import styles from './login.module.css';
+"use client";
+import styles from "./login.module.css";
 
-import { useState } from 'react';
-import axios from 'axios';
-const  SignIn = ()=> {
+import { useState } from "react";
+import axios from "axios";
+const SignIn = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     termsAccepted: false,
   });
   const [errors, setErrors] = useState({
@@ -169,11 +163,24 @@ const  SignIn = ()=> {
       setErrors({ ...errors, terms: true });
       return;
     }
-    
-    let response = await axios.post("/api/login")
+    // console.log(formData);
+
+    let response = await axios.post("/api/login", {
+      email: formData.email,
+      password: formData.password,
+    });
+    if (response.status === 200) {
+      setFormData({
+        email: "",
+        password: "",
+        termsAccepted: false,
+      });
+
+      window.location.href = "/";
+    }
     console.log(response);
 
-    console.log('Login attempted with:', formData);
+    console.log("Login attempted with:", formData);
   };
 
   return (
@@ -188,7 +195,9 @@ const  SignIn = ()=> {
               placeholder="Email"
               className={styles.input}
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               required
             />
           </div>
@@ -199,7 +208,9 @@ const  SignIn = ()=> {
               placeholder="Password"
               className={styles.input}
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               required
             />
           </div>
@@ -220,26 +231,24 @@ const  SignIn = ()=> {
             </label>
           </div>
           {errors.terms && (
-            <p className="text-red-400 text-sm">Please agree to the Terms and Conditions.</p>
+            <p className="text-red-400 text-sm">
+              Please agree to the Terms and Conditions.
+            </p>
           )}
 
-          <button
-            type="submit"
-            className={styles.button}
-          >
+          <button type="submit" className={styles.button}>
             Sign In
           </button>
 
           <div className="relative flex items-center justify-center">
             <div className="border-t border-white/20 w-full"></div>
-            <span className="bg-transparent px-2 text-white/50 text-sm">or</span>
+            <span className="bg-transparent px-2 text-white/50 text-sm">
+              or
+            </span>
             <div className="border-t border-white/20 w-full"></div>
           </div>
 
-          <button
-            type="button"
-            className={styles.googlebutton}
-          >
+          <button type="button" className={styles.googlebutton}>
             <img
               src="https://www.google.com/favicon.ico"
               alt="Google"
@@ -250,12 +259,14 @@ const  SignIn = ()=> {
         </form>
 
         <p className="text-center text-white/50 text-sm">
-          Don't have an account?{' '}
-          <a href="#" className="text-white hover:underline">Sign up</a>
+          Don't have an account?{" "}
+          <a href="#" className="text-white hover:underline">
+            Sign up
+          </a>
         </p>
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;
